@@ -7,7 +7,9 @@ pkgrel=1
 pkgdesc="Modular frontend for creating tool-assisted speedruns (TAS)"
 arch=('x86_64' 'aarch64')
 url="https://github.com/ToolAssisted-run/chimera"
-license=('MIT')
+# Chimera, miniBox, Lua, cJSON, miniz and glad are MIT; the bundled SDL3,
+# OpenAL Soft, zstd and SQLite keep their own terms
+license=('MIT' 'Zlib' 'LGPL-2.0-or-later' 'BSD-3-Clause OR GPL-2.0-only' 'blessing')
 depends=(
   'bash'
   'glibc'
@@ -24,6 +26,7 @@ makedepends=(
   'git'
   'jack'
   'libpulse'
+  'libusb'
   'meson'
   'nasm'
   'ninja'
@@ -35,6 +38,7 @@ optdepends=(
   'ffmpeg: Encode Video (File > Encode Video)'
   'pipewire: audio output through PipeWire'
   'libpulse: audio output through PulseAudio'
+  'libusb: more gamepads, such as the GameCube adapter'
 )
 # Chimera keeps its settings, cores and firmware beside the program, so
 # /opt/chimera-tas is left writable by everyone (see package()).
@@ -130,4 +134,17 @@ package() {
 
   install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
   install -Dm644 NOTICE "$pkgdir/usr/share/licenses/$pkgname/NOTICE"
+
+  # the bundled libraries' own licences
+  local lic="$pkgdir/usr/share/licenses/$pkgname"
+  install -Dm644 extern/chimera-common-minibox/LICENSE "$lic/minibox-LICENSE"
+  install -Dm644 extern/SDL3/SDL/LICENSE.txt "$lic/SDL3-LICENSE"
+  install -Dm644 extern/openal-soft/COPYING "$lic/openal-soft-COPYING"
+  install -Dm644 extern/zstd/LICENSE "$lic/zstd-LICENSE"
+  install -Dm644 extern/zstd/COPYING "$lic/zstd-COPYING"
+  install -Dm644 extern/cjson/LICENSE "$lic/cjson-LICENSE"
+  install -Dm644 extern/miniz/LICENSE "$lic/miniz-LICENSE"
+  install -Dm644 extern/glad/LICENSE "$lic/glad-LICENSE"
+  # Lua's notice is at the end of lua.h
+  sed -n '/^\* Copyright (C) 1994/,/^\*\*\*\*/p' extern/lua/lua.h > "$lic/lua-LICENSE"
 }
