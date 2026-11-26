@@ -1,0 +1,8 @@
+post_install() {
+  cat <<'EOF'
+==> Chimera keeps its settings, cores and firmware in /opt/chimera-tas,
+==> which is writable by all users. It ships no cores: put .chimeraCore
+==> packages in /opt/chimera-tas/cores (see the Cores table at
+==> https://github.com/ToolAssisted-run/chimera#cores).
+EOF
+}
