@@ -5,9 +5,13 @@ name: Bump chimera-tas
 # with no new nightly.
 on:
   schedule:
-    # 07:00 UTC, two hours after Chimera's release workflow is scheduled
+    # 08:00 UTC, three hours after Chimera's release workflow is scheduled
     # (05:00 UTC, its .github/workflows/release.yml)
-    - cron: '0 7 * * *'
+    - cron: '0 8 * * *'
+    # and 18:00 UTC, for a nightly that came out late (GitHub often starts
+    # upstream's run hours after its schedule; recent ones landed as late as
+    # 16:30 UTC)
+    - cron: '0 18 * * *'
   workflow_dispatch:      # Actions tab > Bump chimera-tas > Run workflow
 
 permissions:
