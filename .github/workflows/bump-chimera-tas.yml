@@ -1,10 +1,13 @@
 name: Bump chimera-tas
 
-# Once a week: move chimera-tas/ to Chimera's newest nightly, check that it
-# builds, publish it to the AUR, and commit the bump here.
+# Daily: move chimera-tas/ to Chimera's newest nightly, check that it builds,
+# publish it to the AUR, and commit the bump here. Nothing happens on a day
+# with no new nightly.
 on:
   schedule:
-    - cron: '0 6 * * 1'   # Mondays, 06:00 UTC
+    # 07:00 UTC, two hours after Chimera's release workflow is scheduled
+    # (05:00 UTC, its .github/workflows/release.yml)
+    - cron: '0 7 * * *'
   workflow_dispatch:      # Actions tab > Bump chimera-tas > Run workflow
 
 permissions:
