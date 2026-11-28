@@ -62,7 +62,10 @@ jobs:
         with:
           pkgname: chimera-tas
           pkgbuild: ./chimera-tas/PKGBUILD
+          # .gitignore keeps makepkg's VCS clones and built packages (left in
+          # the AUR checkout by the test build) out of the AUR commit
           assets: |
+            ./chimera-tas/.gitignore
             ./chimera-tas/chimera-tas.sh
             ./chimera-tas/chimera-tas.desktop
             ./chimera-tas/chimera-tas.install
